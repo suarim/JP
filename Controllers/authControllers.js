@@ -21,7 +21,7 @@ const logincontroller = asyncHandler(async (req,res)=>{
     else{
         res.status(404).json({error:"invalid password or email"})
     }
-    res.json({firstName,lastName,email,password,profilePic,mobile})
+    
 })
 
 const registercontroller = asyncHandler(async (req, res) => {

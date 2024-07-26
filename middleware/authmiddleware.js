@@ -1,7 +1,9 @@
-import jwt from "jsonwebtoken"
-import User from "../Models/User.js";
-export const protectRoute = async (req,res,next)=>{
+const jwt = require('jsonwebtoken');
+
+const User  = require("../Models/User.js")
+const protectRoute = async (req,res,next)=>{
     try {
+        console.log("in middle ware")
         const token = req.cookies.jwt
         if(!token){
             return res.status(401).json({err:"not logged in"})
@@ -10,13 +12,16 @@ export const protectRoute = async (req,res,next)=>{
         if(!decoded){
             return res.status(401).json({err:"invalid token"})
         }
-        console.log(decoded)
+    
         const user = await User.findById(decoded.userid)
         req.user = user
-        console.log(user._id)
-        console.log(token)
+      
+        console.log("token->",token)
+        console.log("end")
         next()
     } catch (error) {
-        res.status(500).json({error:"internal servhkkger error"})
+        res.status(500).json({error:error.message})
     }
 }
+
+module.exports = {protectRoute}

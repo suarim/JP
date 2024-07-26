@@ -36,6 +36,8 @@ const userSchema = mongoose.Schema({
         minlength: [10, 'Mobile number must be at least 10 digits long'],
         maxlength: [15, 'Mobile number cannot exceed 15 digits']
     }
+},{
+    timestamps:true
 });
 
 const User = mongoose.model("User", userSchema);
