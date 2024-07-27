@@ -1,3 +1,15 @@
+// const express = require("express");
+// const router = express.Router();
+
+
+// // Health check route
+// router.get("/", (req, res) => {
+//   return res.status(200).json({ message: "Admin API is working" });
+// });
+
+// module.exports = router;
+
+
 const express = require("express");
 const {
   getApprovedSitesController,
@@ -5,9 +17,14 @@ const {
   updateApprovedSiteController,
   getSuggestedSitesController,
   deleteSuggestedSiteController
-} = require("../Controllers/adminControllers");
+} = require("../Controllers/siteControllers");
 
 const router = express.Router();
+
+// Health check route
+  router.get("/", (req, res) => {
+    res.status(200).json({ message: "Admin API is working" });
+  });
 
 // Route to get approved sites
 router.get("/approved-sites", getApprovedSitesController);
@@ -16,7 +33,7 @@ router.get("/approved-sites", getApprovedSitesController);
 router.post("/approved-sites", createApprovedSiteController);
 
 // Route to update an approved site
-router.put("/approved-sites/:id", updateApprovedSiteController);
+router.patch("/approved-sites/:id", updateApprovedSiteController);
 
 // Route to get suggested sites
 router.get("/suggested-sites", getSuggestedSitesController);
