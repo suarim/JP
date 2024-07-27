@@ -7,6 +7,7 @@ const adminroute = require('./Routes/admin.js')
 const userroute = require("./Routes/user.js")
 const employeeroute = require("./Routes/employee.js")
 const cookieParser = require("cookie-parser")
+const productroute = require("./Routes/product")
 
 const app = express()
 const errorHandler = require("./middleware/errorMiddleware.js");
@@ -28,6 +29,7 @@ app.use("/api/auth",authroute)
 app.use("/api/user",userroute)
 app.use("/api/admin",adminroute)
 app.use("/api/employee",employeeroute )
+app.use("/api/product", productroute)
 
 // app.use("/api/employee",employeeroute)
 app.listen(port,async ()=>{
