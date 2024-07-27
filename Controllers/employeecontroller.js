@@ -45,6 +45,13 @@ const siteaddcontrolller = asyncHandler(async (req, res) => {
     res.status(201).json(createdsite);
 });
 
+const getapprovedsites=async (req,res)=>{
+    const user = req.user
+    const sites = await Site.find({ approved: true, attended: false });
+    res.status(200).json(sites);
+    
+}
+
 const loginemployee = asyncHandler(async (req, res) => {
     const {email,password} = req.body
     let user = await Employee.findOne({ email });

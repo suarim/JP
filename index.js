@@ -27,8 +27,9 @@ app.get("/",(req,res)=>{
 app.use("/api/auth",authroute)
 app.use("/api/user",userroute)
 app.use("/api/admin",adminroute)
+app.use("/api/employee",employeeroute )
 
-app.use("/api/employee",employeeroute)
+// app.use("/api/employee",employeeroute)
 app.listen(port,async ()=>{
     await mongoose.connect(process.env.MONGO_URI).then(()=>{
       console.log("connected")
