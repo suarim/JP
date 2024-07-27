@@ -1,5 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Product = require("../Models/product.js"); // Adjust the path as needed
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 
 const createproduct = asyncHandler(async (req, res) => {
     const { name, description, price,  stock, imageUrl } = req.body;
@@ -58,8 +60,36 @@ const getproductbyid = asyncHandler(async (req, res) => {
     res.status(200).json(product);
 });
 
+const buyproduct = asyncHandler(async (req, res) => {
+    const { id } = req.params; // Extract the product ID from request parameters
+    const product = await Product.findById(id);
+
+    if (!product) {
+        return res.status(404).json({ error: "Product not found" });
+    }
+    console.log("id-->",id)
+    console.log("product-->",product)
+    try {
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: product.price * 100, // Amount in cents
+            currency: 'inr',
+            payment_method_types: ['card']
+        });
+
+        res.status(201).json({
+            clientSecret: paymentIntent.client_secret
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
+
 module.exports = {
     createproduct,
     getallproducts,
-    getproductbyid
+    getproductbyid,
+    buyproduct
 };

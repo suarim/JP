@@ -1,9 +1,10 @@
 const express = require("express")
-const { createproduct, getallproducts, getproductbyid } = require("../Controllers/productcontroller")
+const { createproduct, getallproducts, getproductbyid, buyproduct } = require("../Controllers/productcontroller")
 const { protectRouteemployee } = require("../middleware/employeeMiddleware")
 const { adminmiddleware } = require("../middleware/adminmiddleware")
 const router = express.Router()
 router.post('/create',adminmiddleware,createproduct)
 router.get('/',adminmiddleware,getallproducts)
+router.post('/buy/:id',buyproduct)
 router.get('/:id',adminmiddleware,getproductbyid)
 module.exports = router
