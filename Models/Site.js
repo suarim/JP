@@ -16,10 +16,10 @@ const siteSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    approved:{
-        type:Boolean,
+    status:{
+        type:String,
         required:true,
-        default:false
+        
     },
     attended:{
         type:Boolean,
