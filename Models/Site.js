@@ -5,7 +5,8 @@ const siteSchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true
+        required: true,
+        default:"model"
     },
     longitude: {
         type: Number,
@@ -14,7 +15,17 @@ const siteSchema = mongoose.Schema({
     latitude: {
         type: Number,
         required: true
+    },
+    approved:{
+        type:Boolean,
+        required:true,
+        default:false
+    },
+    attended:{
+        type:Boolean,
+        default:false
     }
+
 });
 
 const Site = mongoose.model("Site", siteSchema);
