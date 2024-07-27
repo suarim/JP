@@ -3,11 +3,11 @@ const Product = require("../Models/product.js"); // Adjust the path as needed
 
 const createproduct = asyncHandler(async (req, res) => {
     const { name, description, price,  stock, imageUrl } = req.body;
-
+    // return res.json("working")
     // Validate required fields
     if (!name || !description || !price) {
-        res.status(400);
-        throw new Error("Name, description, price, and category are required");
+        return res.status(400).json({error:"enter all fields"});
+        // throw new Error("Name, description, price, and category are required");
     }
 
     // Create a new product instance
@@ -25,6 +25,10 @@ const createproduct = asyncHandler(async (req, res) => {
     // Respond with the created product
     res.status(201).json(createdProduct);
 });
+
+// const createproduct = asyncHandler(async(req, res)=>{
+//     return res.send("createProduct")
+// })
 
 const getallproducts = asyncHandler(async (req, res) => {
     try {

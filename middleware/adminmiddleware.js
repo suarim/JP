@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken');
 const Employee = require('../Models/employee.js');
 
-const protectRouteemployee = async (req, res, next) => {
+const adminmiddleware = async (req, res, next) => {
     try {
+        console.log("In middleware");
+        
         // Extract the token from cookies
         const token = req.cookies.jwtemployee;
         
@@ -27,15 +29,22 @@ const protectRouteemployee = async (req, res, next) => {
             return res.status(401).json({ error: "User not found" });
         }
 
-        // Attach the user to the request object
-        req.user = user;
+        console.log("Token:", token);
+        console.log("End");
+        console.log("Admin status:", user.admin);
 
-        // Proceed to the next middleware or route handler
-        next();
+        // Check if the user is an admin
+        if (user.admin) {
+            // Attach the user to the request object
+            req.user = user;
+            next();
+        } else {
+            console.log("Unauthorized access attempt");
+            return res.status(401).json({ error: "Unauthorized" });
+        }
     } catch (error) {
-        // Handle any errors that occur
         return res.status(500).json({ error: error.message });
     }
 };
 
-module.exports = { protectRouteemployee };
+module.exports = { adminmiddleware };
